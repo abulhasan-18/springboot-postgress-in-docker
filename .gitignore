@@ -1,16 +1,53 @@
-# Compiled class file
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Java / JVM ---
 *.class
-
-# Log file
 *.log
+*.hprof
+hs_err_pid*
+replay_pid*
 
-# BlueJ files
-*.ctxt
+# --- Ideas / editors ---
+.idea/
+.vscode/
+*.swp
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# --- Build outputs ---
+target/
+build/
+out/
 
-# Package Files #
+# --- Maven ---
+.mvn/wrapper/maven-wrapper.properties
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+.mvn/jvm.config
+
+# --- Gradle ---
+.gradle/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# --- Spring Boot runtime ---
+spring.log
+*.pid
+*.pid.lock
+/tmp/
+
+# --- Tests & coverage ---
+surefire-reports/
+failsafe-reports/
+.test-results/
+jacoco.exec
+jacoco/
+coverage/
+
+# --- Dependencies / archives (don’t commit builds) ---
 *.jar
 *.war
 *.nar
@@ -18,7 +55,57 @@
 *.zip
 *.tar.gz
 *.rar
+# keep wrappers:
+!/.mvn/wrapper/maven-wrapper.jar
+!/gradle/wrapper/gradle-wrapper.jar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# --- IDEs ---
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.factorypath
+.springBeans
+.apt_generated/
+.apt_generated_test/
+
+# VS Code
+.vscode/
+
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+.nb-gradle/
+
+# --- Env / secrets ---
+.env
+.env.*
+!.env.example
+
+# Keep base app configs but ignore env-specific ones
+src/main/resources/application-*.yml
+src/main/resources/application-*.yaml
+src/main/resources/application-*.properties
+!src/main/resources/application.yml
+!src/main/resources/application.yaml
+!src/main/resources/application.properties
+
+# --- Tools / linters / caches ---
+.cache/
+.checkstyle/
+.pmd/
+.spotless/
+node_modules/
+
+# --- Misc (from your snippet) ---
+*.ctxt
+.mtj.tmp/

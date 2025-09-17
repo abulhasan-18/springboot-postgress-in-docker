@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Users</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="bg-gray-100 min-h-screen p-6">
+    <div class="mx-auto w-full max-w-6xl">
+      <!-- Header -->
+      <div
+        class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+      >
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">
+            Users
+          </h1>
+          <p class="text-sm text-gray-500">
+            Manage your people — quick edit, delete, and search.
+          </p>
+        </div>
+        <a
+          href="/register"
+          class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-white font-semibold shadow hover:bg-indigo-700 transition"
+        >
+          + Add User
+        </a>
+      </div>
+
+      <!-- Card -->
+      <div class="rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
+        <!-- Toolbar -->
+        <div
+          class="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div class="relative w-full sm:max-w-xs">
+            <input
+              id="tableSearch"
+              type="text"
+              placeholder="Search name or email…"
+              class="w-full rounded-xl border border-gray-200 px-4 py-2.5 pr-10 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            />
+            <svg
+              class="pointer-events-none absolute right-3 top-2.5 h-5 w-5 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+              />
+            </svg>
+          </div>
+          <p
+            th:text="${message}"
+            class="text-sm font-medium text-green-600"
+          ></p>
+        </div>
+
+        <!-- Table wrapper -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-sm">
+            <thead
+              class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+            >
+              <tr>
+                <th class="px-6 py-3 font-semibold">ID</th>
+                <th class="px-6 py-3 font-semibold">Name</th>
+                <th class="px-6 py-3 font-semibold">Email</th>
+                <th class="px-6 py-3 text-center font-semibold">Actions</th>
+              </tr>
+            </thead>
+
+            <!-- Empty state -->
+            <tbody
+              th:if="${#lists.isEmpty(users)}"
+              class="divide-y divide-gray-100"
+            >
+              <tr>
+                <td colspan="4" class="px-6 py-10 text-center text-gray-500">
+                  No users yet. Click
+                  <span class="font-semibold text-gray-700">“Add User”</span> to
+                  create one.
+                </td>
+              </tr>
+            </tbody>
+
+            <!-- Data rows -->
+            <tbody
+              id="tableBody"
+              th:unless="${#lists.isEmpty(users)}"
+              class="divide-y divide-gray-100"
+            >
+              <tr
+                th:each="user : ${users}"
+                class="hover:bg-gray-50 transition"
+                th:attr="data-name=${user.name},data-email=${user.email}"
+              >
+                <td class="px-6 py-3 text-gray-800" th:text="${user.id}">1</td>
+                <td class="px-6 py-3 text-gray-800" th:text="${user.name}">
+                  Jane Doe
+                </td>
+                <td class="px-6 py-3 text-gray-700" th:text="${user.email}">
+                  jane@example.com
+                </td>
+                <td class="px-6 py-3">
+                  <div class="flex items-center justify-center gap-2">
+                    <!-- Edit -->
+                    <a
+                      th:href="@{'/users/edit/' + ${user.id}}"
+                      class="inline-flex items-center rounded-lg bg-indigo-50 px-3 py-1.5 text-indigo-700 hover:bg-indigo-100 border border-indigo-100 text-xs font-semibold"
+                    >
+                      <!-- pencil -->
+                      <svg
+                        class="mr-1 h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M17.414 2.586a2 2 0 0 0-2.828 0L6 11.172V14h2.828l8.586-8.586a2 2 0 0 0 0-2.828z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M4 16a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Edit
+                    </a>
+                    <!-- Delete -->
+                    <a
+                      th:href="@{'/users/delete/' + ${user.id}}"
+                      onclick="return confirm('Delete this user?')"
+                      class="inline-flex items-center rounded-lg bg-rose-50 px-3 py-1.5 text-rose-700 hover:bg-rose-100 border border-rose-100 text-xs font-semibold"
+                    >
+                      <!-- trash -->
+                      <svg
+                        class="mr-1 h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M6 8a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1zm-5 9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7H5v10zM14 4h-1.5a1 1 0 0 1-1-1V3H8.5v0a1 1 0 0 1-1 1H6v2h8V4z"
+                        />
+                      </svg>
+                      Delete
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-4 text-xs text-gray-500">
+          Tip: Use the search box to quickly filter by
+          <span class="font-medium text-gray-700">name</span> or
+          <span class="font-medium text-gray-700">email</span>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Tiny search script -->
+    <script>
+      const q = document.getElementById("tableSearch");
+      const body = document.getElementById("tableBody");
+      if (q && body) {
+        q.addEventListener("input", () => {
+          const term = q.value.trim().toLowerCase();
+          const rows = body.querySelectorAll("tr");
+          let shown = 0;
+          rows.forEach((r) => {
+            const name = (r.getAttribute("data-name") || "").toLowerCase();
+            const email = (r.getAttribute("data-email") || "").toLowerCase();
+            const match = !term || name.includes(term) || email.includes(term);
+            r.style.display = match ? "" : "none";
+            if (match) shown++;
+          });
+          body.parentElement.dataset.empty = shown === 0 ? "1" : "0";
+        });
+      }
+    </script>
+  </body>
+</html>

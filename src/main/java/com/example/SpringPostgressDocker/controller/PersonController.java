@@ -6,7 +6,6 @@ import com.example.SpringPostgressDocker.repository.PersonRepository;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +19,7 @@ public class PersonController {
     @Autowired
     private PersonRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  
 
     // ---- LIST USERS ----
     @GetMapping("/users")
@@ -52,9 +50,6 @@ public class PersonController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
-
-        // hash password here
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
         model.addAttribute("message", "Registration successful!");
@@ -102,4 +97,10 @@ public class PersonController {
         }
         return "redirect:/users";
     }
+
+    @GetMapping("/")
+    public String home() {  
+        return "redirect:/users";
+    }
+
 }

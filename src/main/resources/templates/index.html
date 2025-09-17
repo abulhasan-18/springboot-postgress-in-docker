@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home • User Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body
+    class="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-gray-900 dark:text-gray-100 transition-colors duration-300"
+  >
+    <!-- Top bar -->
+    <header class="px-6 py-4">
+      <div class="mx-auto max-w-6xl flex items-center justify-between">
+        <a
+          href="/index"
+          class="flex items-center gap-2 text-white/90 hover:text-white font-semibold tracking-tight"
+        >
+          <!-- Brand icon -->
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l9 4.5v6c0 5-4 9-9 9s-9-4-9-9v-6L12 2z" />
+          </svg>
+          <span>User Manager</span>
+        </a>
+        <button
+          id="themeToggle"
+          class="rounded-xl bg-white/10 text-white/90 backdrop-blur px-3 py-1.5 text-sm ring-1 ring-white/20 hover:bg-white/20"
+        >
+          🌙/☀️
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main class="px-6 pb-10">
+      <section class="mx-auto max-w-6xl">
+        <div
+          class="rounded-3xl bg-white/10 dark:bg-black/20 backdrop-blur-xl ring-1 ring-white/20 shadow-2xl p-8 sm:p-12"
+        >
+          <div class="flex flex-col lg:flex-row items-center gap-10">
+            <!-- Copy -->
+            <div class="flex-1">
+              <h1
+                class="text-3xl sm:text-5xl font-extrabold leading-tight text-white drop-shadow"
+              >
+                Spring Boot + Postgres <span class="text-white/90">CRUD</span>
+              </h1>
+              <p class="mt-4 text-white/80 text-base sm:text-lg">
+                Dockerized, minimal, and fast. Add, list, edit, and delete users
+                with a clean UI.
+              </p>
+
+              <!-- Quick stats (render if provided) -->
+              <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-4">
+                  <div class="text-xs uppercase tracking-wider text-white/70">
+                    Users
+                  </div>
+                  <div
+                    class="text-2xl font-bold text-white"
+                    th:text="${stats != null ? stats.totalUsers : '—'}"
+                  >
+                    —
+                  </div>
+                </div>
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-4">
+                  <div class="text-xs uppercase tracking-wider text-white/70">
+                    Database
+                  </div>
+                  <div class="text-2xl font-bold text-white">PostgreSQL</div>
+                </div>
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-4">
+                  <div class="text-xs uppercase tracking-wider text-white/70">
+                    Runtime
+                  </div>
+                  <div class="text-2xl font-bold text-white">Java 21</div>
+                </div>
+              </div>
+
+              <!-- CTAs -->
+              <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <a
+                  th:href="@{/register}"
+                  href="/register"
+                  class="inline-flex items-center justify-center rounded-2xl bg-white text-indigo-700 font-semibold px-5 py-3 shadow hover:-translate-y-0.5 transition"
+                >
+                  + Register User
+                </a>
+                <a
+                  th:href="@{/users}"
+                  href="/users"
+                  class="inline-flex items-center justify-center rounded-2xl bg-white/10 text-white font-semibold px-5 py-3 ring-1 ring-white/30 hover:bg-white/20 transition"
+                >
+                  View Users
+                </a>
+              </div>
+
+              <!-- flash/info -->
+              <p
+                th:text="${message}"
+                class="mt-4 text-sm font-medium text-emerald-200"
+              ></p>
+            </div>
+
+            <!-- Pretty card / features -->
+            <div class="flex-1 w-full">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-5">
+                  <div class="flex items-center gap-3 text-white">
+                    <svg
+                      class="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2zm-1 14l6-6-1.414-1.414L11 12.172 8.414 9.586 7 11l4 4z"
+                      />
+                    </svg>
+                    <span class="font-semibold">Spring Security Ready</span>
+                  </div>
+                  <p class="mt-2 text-white/80 text-sm">
+                    BCrypt hashing & easy auth config.
+                  </p>
+                </div>
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-5">
+                  <div class="flex items-center gap-3 text-white">
+                    <svg
+                      class="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2H4V6zm0 4h16v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6z"
+                      />
+                    </svg>
+                    <span class="font-semibold">PostgreSQL via Docker</span>
+                  </div>
+                  <p class="mt-2 text-white/80 text-sm">
+                    Isolated, reproducible dev env.
+                  </p>
+                </div>
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-5">
+                  <div class="flex items-center gap-3 text-white">
+                    <svg
+                      class="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M13 3l3 3-9 9H4v-3l9-9zM4 17h16v2H4z" />
+                    </svg>
+                    <span class="font-semibold">CRUD, but classy</span>
+                  </div>
+                  <p class="mt-2 text-white/80 text-sm">
+                    Clean forms, responsive tables, dark mode.
+                  </p>
+                </div>
+                <div class="rounded-2xl bg-white/15 ring-1 ring-white/15 p-5">
+                  <div class="flex items-center gap-3 text-white">
+                    <svg
+                      class="h-5 w-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" />
+                    </svg>
+                    <span class="font-semibold">Thymeleaf Templates</span>
+                  </div>
+                  <p class="mt-2 text-white/80 text-sm">
+                    Server-rendered views that just work.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-8 text-center text-sm text-white/70">
+          Built with ❤️ using Spring Boot, Postgres, and Docker.
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      // dark mode toggle (persist)
+      const root = document.documentElement;
+      const applyTheme = (m) =>
+        m === "dark"
+          ? root.classList.add("dark")
+          : root.classList.remove("dark");
+      applyTheme(localStorage.getItem("theme") || "light");
+      document.getElementById("themeToggle")?.addEventListener("click", () => {
+        const next =
+          (localStorage.getItem("theme") || "light") === "light"
+            ? "dark"
+            : "light";
+        localStorage.setItem("theme", next);
+        applyTheme(next);
+      });
+    </script>
+  </body>
+</html>
